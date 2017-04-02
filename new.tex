@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{cite}
+\usepackage{caption}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,chains}
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\usepackage{hyperref}
+
+\begin{document}
+\thispagestyle{fancy}
+\fancyhf{}
+\rhead{06-03-2017}
+\lhead{Multiply 2-digit numbers}
+\chead{Aditya Jhawar}
+
+\tikzstyle{calc}=[rectangle,draw,fill=blue!20,text width=4.5cm,text centered,rounded corners,minimum height=3em,minimum width=10em]
+\tikzstyle{line}=[draw,-latex']
+\tikzstyle{cloud}=[ellipse,draw,fill=red!20,minimum height=2em]
+
+\section{Introduction}
+\href{https://en.wikipedia.org/wiki/Vedic_period}{Vedic period} was one of the best times of Indian civilisation and many new advancements were made in all spheres of life.Mathematics,was particularly, a subject of interest. The \href{https://en.wikipedia.org/wiki/Atharvaveda}{Atharva Veda},~\cite{Veda} is one of the four Vedas and contains knowledge abouut everday procedures.The below method of multiplication has been derived from the Atharva Veda.~\cite{commentary}
+
+\section{Pseudocode}
+\label{pseudocode}
+\begin{algorithm}
+\caption{\large\textbf{Multiplication of two numbers}}
+\begin{algorithmic}
+\REQUIRE Two 2-digit numbers
+\STATE $x \leftarrow first\_number$
+\STATE $y \leftarrow second\_number$
+\STATE $n1 \leftarrow x/10$
+\STATE $m1 \leftarrow x\%10$
+\STATE $n2 \leftarrow y/10$
+\STATE $m2 \leftarrow y\%10$
+\IF {$n1 == n2$ \AND $m1+m2 == 10$}
+	\STATE $mul \leftarrow CASE1(n1,m1,m2)$
+\ENDIF
+\IF {$n1+n2 == 10$ \AND $m1 == m2$}
+	\STATE $mul \leftarrow CASE2(n1,n2,m1)$
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{\large\textbf{CASE1}}
+\begin{algorithmic}
+\label{case1}
+\REQUIRE 3 numbers from the calling function
+\STATE $a \leftarrow n1*(n1+1)$
+\STATE $b \leftarrow m1*m2$
+\STATE return $a*100+b$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{\large\textbf{CASE2}}
+\begin{algorithmic}
+\label{case2}
+\REQUIRE 3 numbers from the calling function
+\STATE $a \leftarrow n1*n2+m1$
+\STATE $b \leftarrow m1*m1$
+\STATE return $a*100+b$
+\end{algorithmic}
+\end{algorithm}
+
+\section{Examples}
+Let x denote the first two digits and y denote the last two digits of the resulting 4- digit number from the multiplication.
+
+\begin{figure}[H]
+\caption{Examples}
+\begin{subfigure}{\textwidth}
+\centering
+\caption{Flowchart illustrating 66x64}
+\begin{tikzpicture}[node distance=2cm,auto]
+	\node [cloud] (a) {Start};
+	\node [calc,below of=a] (c) {x=6*(6+1)=42};
+	\node [calc,below of=c] (d) {y=6*4=24};
+	\node [calc,below of=d] (e) {Result=4224};
+	\node [cloud,below of=e] (f) {End};
+	\path [line] (a)--(c);
+	\path [line] (c)--(d);
+	\path [line] (d)--(e);
+	\path [line] (e)--(f);
+\end{tikzpicture}
+\end{subfigure}
+
+\begin{subfigure}{\textwidth}
+\centering
+\caption{Flowchart illustrating 74x34}
+\begin{tikzpicture}[node distance=2cm,auto]
+	\node [cloud] (a) {Start};
+	\node [calc,below of=a] (c) {x=3*7+4=25};
+	\node [calc,below of=c] (d) {y=4*4=16};
+	\node [calc,below of=d] (e) {Result=2516};
+	\node [cloud,below of=e] (f) {End};
+	\path [line] (a)--(c);
+	\path [line] (c)--(d);
+	\path [line] (d)--(e);
+	\path [line] (e)--(f);
+\end{tikzpicture} 
+\end{subfigure}
+\end{figure}
+
+\section{Explanations}
+\subsection{How to do it mentally}
+The process of doing the calculation mentally has been given below.It borrows from section \ref{pseudocode}.
+\begin{enumerate}
+\item Look at the two numbers
+\item If their one's digits add upto 10 and their ten's digits are same,we got to step 3 else go to step 5.
+\item Multiply the ten's digit with its succeeding number.This gives the ffirst two digits of the product.
+\item Multiply their one's digits. This gives the last two digits and we have the complete number.
+\item If their ten's digits add upto 10 and their one's digits are same,we got to step 6.\footnote{If neither of the cases is true then our method fails}
+\item Multiply their ten's digit and add the result to the one's digit.This gives the first two digits of the product.
+\item Multiply their one's digits to get the last two digits of the product.
+\item Hence we have the complete number.\footnote{CAUTION:If on multiplying we obtain a single digit then we should consider the second digit to be 0.}
+\end{enumerate}
+
+\subsection{Advantages}
+The above method is advantageous due to the following reasons:
+\begin{itemize}
+\item Multiplication is performed on one digit numbers,which is elementary.
+\item No tedious additions
+\end{itemize}
+
+\subsection{Algebraic}
+x denotes the first number.\\
+y denotes the second number.\\
+n1 denotes the ten's digit of the first number.\\
+n2 denotes the ten's digit of the second number.\\
+m1 denotes the one's digit of the first number.\\
+m2 denotes the one's digit of the second number.\\
+\begin{table}[h!]
+\begin{tabular}{l|l|l}
+\hline
+\textbf{Case} & \textbf{Description} & \textbf{Formula}\\
+\hline
+1 & Ten's digit is same and one's digit add to 10 & n1*(n1+1)*100+m1*m2\\
+\hline
+2 & Ten's digits add to 10 and one's digit is same & (n1*n2+m1)*100+m1*m1\\
+\end{tabular}
+\end{table}
+
+\subsubsection{Case 1}
+As shown in algorithm\ref{case1}
+\begin{align*}
+x*y&=(n1*10+m1)*(n2*10+m2)\\
+&=n1*n2*100+m1*n2*10+m2*n1*10+m1*m2\\
+&=n1*n1*100+(m1+m2)*n1*10+m1*m2\tag*{n1=n2}\\
+&=n1*n1*100+n1*100+m1*m2\tag*{m1+m2=10}\\
+&=n1*(n1+1)*100+m1*m2\\
+\end{align*}
+
+
+\subsubsection{Case 2}
+As shown in algorithm\ref{case2}
+\begin{align*}
+x*y&=(n1*10+m1)*(n2*10+m2)\\
+&=n1*n2*100+n1*m2*10+n2*m1*10+m1*m2\\
+&=n1*n2*100+(n1+n2)*m1*10+m1*m1\tag*{m1=m2}\\
+&=n1*n2*100+m1*100+m1*m1\tag*{n1+n2=10}\\
+&=(n1*n2+m1)*100+m1*m1\\
+\end{align*}
+
+
+\section{Generalisation}
+We can generalise it for the product of two n-digit numbers.
+\begin{itemize}
+\item Take two n-digit numbers.
+\item If first  digits are same and the last (n-1) digits add to 10\textsuperscript{n} then
+	\begin{itemize}
+	\item First 2 digits are given by the product of the n\textsuperscript{th} digits
+	\item remaining digits are given by the product of the resulting n-1 digit numbers
+	\end{itemize}
+\item If first n-1 digits add to 10\textsuperscript{n} and the last digits are same then
+	\begin{itemize}
+	\item Last two digits are given by the product of the last digits
+	\item First digits are given by the product of the resulting n-1 digit numbers and adding the last digit to the product obtained
+	\end{itemize}
+\item Hence, the product is obtained
+\end{itemize}
+\bibliography{mybib}
+\bibliographystyle{plain}
+\end{document}
